@@ -8,9 +8,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.List;
 
-public class FileFilter {
+public class FileFiltering {
 
-    private static final Logger logger = LogManager.getLogger(FileFilter.class);
+    private static final Logger logger = LogManager.getLogger(FileFiltering.class);
 
     public static void main(String[] args) {
         LogConfig.configure();
