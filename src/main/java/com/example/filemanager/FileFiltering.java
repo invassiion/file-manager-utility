@@ -15,7 +15,14 @@ public class FileFiltering {
     public static void main(String[] args) {
         LogConfig.configure();
         ArgumentParser argumentParser = ArgumentParser.parseArgs(args);
+        FileManager fileManager = new FileManager(argumentParser.getOutputDirectory(), argumentParser.getPrefix(), argumentParser.isAppend());
+        DataProcessor dataProcessor = new DataProcessor();
+        StatisticCollector statisticCollector =  new StatisticCollector();
+        runFiltering(argumentParser, fileManager, dataProcessor, statisticCollector);
 
+    }
+
+    public static void runFiltering(ArgumentParser argumentParser, FileManager fileManager, DataProcessor dataProcessor, StatisticCollector statisticCollector) {
         if (argumentParser.getInputFiles() == null || argumentParser.getInputFiles().isEmpty()) {
             logger.error("No input files specified");
             System.out.println("No input files specified");
@@ -25,9 +32,7 @@ public class FileFiltering {
         logger.info("Starting file filtering utility...");
         System.out.println("Starting file filtering utility...");
 
-        FileManager fileManager = new FileManager(argumentParser.getOutputDirectory(), argumentParser.getPrefix(), argumentParser.isAppend());
-        DataProcessor dataProcessor = new DataProcessor();
-        StatisticCollector statisticCollector =  new StatisticCollector();
+
 
         try {
             List<String> lines = fileManager.readLines(argumentParser.getInputFiles());
@@ -50,6 +55,7 @@ public class FileFiltering {
             logger.error("Error processing files: ", e);
             System.err.println("Error processing files: " + e.getMessage());
         }
+
     }
 
     private static void printShortStatistics(DataProcessor dataProcessor, StatisticCollector statisticsCollector) {
